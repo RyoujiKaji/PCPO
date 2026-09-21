@@ -1,8 +1,11 @@
+﻿using ApartmentRentals.Data.Models;
+using HotChocolate;
+
 namespace ApartmentRentals.Data.DTOs
 {
-    public class UserDTO{
-        public string Id { get; set; } = "";
-        public string Name { get; set; } = "";
-        public int registered_objects {get; set;} = 0;
+    public class UserDTO : User
+    {
+        [GraphQLIgnore]
+        public new string Id { get; set; } = string.Empty;
     }
 }

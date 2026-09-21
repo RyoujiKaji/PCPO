@@ -53,7 +53,7 @@
       "AuthenticationOptions": { "AuthenticationProviderKey": "Bearer" }
     },
     {
-      "DownstreamPathTemplate": "/api/User/{everything}",
+      "DownstreamPathTemplate": "/graphql/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -61,8 +61,20 @@
           "Port": 8080
         }
       ],
-      "UpstreamPathTemplate": "/api/User/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "UpstreamPathTemplate": "/graphql/User/{everything}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/graphql/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "user_services",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/graphql/User/{everything}",
+      "UpstreamHttpMethod": [ "POST" ],
       "AuthenticationOptions": { "AuthenticationProviderKey": "Bearer" }
     },
     {
@@ -149,17 +161,6 @@
           "Name": "Apartment API",
           "Version": "v1",
           "Url": "http://apartmentrentals:8080/swagger/v1/swagger.json"
-        }
-      ]
-    },
-    {
-      "Key": "users",
-      "TransformByOcelotConfig": false,
-      "Config": [
-        {
-          "Name": "Users API",
-          "Version": "v1",
-          "Url": "http://user_services:8080/swagger/v1/swagger.json"
         }
       ]
     }

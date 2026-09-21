@@ -3,18 +3,9 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace ApartmentRentals.Data.Models
 {
-    public abstract class User : IModel
+    public class User : IModel
     {
-        [BsonElement("surname")]
-        public string Surname { get; set; } = string.Empty;
-        [BsonElement("name")]
-        public string Name { get; set; } = string.Empty;
-
-        [BsonElement("middlename")]
-        public string? MiddleName { get; set; } = null;
-        [BsonElement("phone")]
-        public string Phone { get; set; } = string.Empty;
-        [BsonElement("email")]
-        public string Email { get; set; } = string.Empty;
+        public string Name { get; set; } = "";
+        public int registered_objects { get; set; } = 0;
     }
 }

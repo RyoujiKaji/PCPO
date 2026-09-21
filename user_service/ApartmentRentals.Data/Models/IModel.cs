@@ -7,6 +7,6 @@ namespace ApartmentRentals.Data.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string Id { get; set; } = string.Empty;
     }
 }

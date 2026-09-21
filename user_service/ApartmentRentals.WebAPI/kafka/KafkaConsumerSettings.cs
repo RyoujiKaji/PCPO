@@ -1,4 +1,3 @@
-using ApartmentRentals.Models;
 using Confluent.Kafka;
 
 public class KafkaConsumerSettings

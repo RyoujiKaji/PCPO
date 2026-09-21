@@ -1,23 +1,20 @@
 using ApartmentRentals.Data.DTOs;
+using ApartmentRentals.Data.Models;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
-using System.Threading.Tasks;
-using AutoMapper;
 using kafka.KafkaProducer;
 using System.Runtime.InteropServices.ObjectiveC;
+using ApartmentRentals.WebAPI.Services.Repositories;
 
-namespace ApartmentRentals.UsersService
+namespace ApartmentRentals.WebAPI.kafka
 {
     public class UserService
     {
-        private readonly UserRepository<UserDTO> _userRepository;
-        private readonly IMapper _mapper;
+        private readonly MongoDbRepository<User> _userRepository;
         private readonly KafkaProducer _producer;
         private readonly KafkaProducerSettings _producerSettings;
-        public UserService(UserRepository<UserDTO> userRepository, KafkaProducer producer, IOptions<KafkaProducerSettings> producerSettings,
-            IMapper mapper) {
+        public UserService(MongoDbRepository<User> userRepository, KafkaProducer producer, IOptions<KafkaProducerSettings> producerSettings) {
             _userRepository = userRepository;
-            _mapper = mapper;
             _producer = producer;
             _producerSettings = producerSettings.Value;
         }

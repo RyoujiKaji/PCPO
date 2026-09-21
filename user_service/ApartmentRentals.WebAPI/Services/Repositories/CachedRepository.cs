@@ -98,7 +98,7 @@ namespace ApartmentRentals.WebAPI.Services.Repositories
             return _object;
         }
 
-        public async Task CreateAsync(T newSpace) => await Repository.CreateAsync(newSpace);
+        public async Task<string> CreateAsync(T newSpace) => await Repository.CreateAsync(newSpace);
 
         public async Task<bool> UpdateAsync(string id, T updatedSpace)
         {

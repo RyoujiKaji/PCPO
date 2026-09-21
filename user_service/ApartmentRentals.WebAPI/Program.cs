@@ -1,63 +1,20 @@
 using ApartmentRentals.Data.Models;
-using ApartmentRentals.Data.DTOs;
-using ApartmentRentals.Models;
 using ApartmentRentals.WebAPI.Services;
 using ApartmentRentals.WebAPI.Services.Repositories;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Prometheus;
 using StackExchange.Redis;
 using kafka.KafkaProducer;
-using ApartmentRentals.KafkaConsumer;
 using Confluent.Kafka;
-using ApartmentRentals.UsersService;
-using Microsoft.OpenApi.Models;
+using ApartmentRentals.WebAPI.Services.GraphQL;
+using ApartmentRentals.WebAPI.kafka;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ApartmentRentals.Tests")]
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-//builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "MS_Lab", Version = "v1" });
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = "JWT Authorization header using the Bearer scheme. Example: 'Bearer 12345abcdef'",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Scheme = "Bearer"
-    });
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-            },
-            new List<string>()
-        }
-    });
-});
-
-// Настраиваем авто маппер
-builder.Services.AddAutoMapper(cfg =>
-{
-    cfg.AddProfile<MappingProfile>();
-});
-
-// Не отрезай Async в названии
-builder.Services.AddControllers(options =>
-{
-    options.SuppressAsyncSuffixInActionNames = false;
-});
-
+// === Регистрируем кафку ===
 builder.Services.AddOptions<KafkaProducerSettings>()
     .Bind(builder.Configuration.GetSection("KafkaProducer"))
     .ValidateDataAnnotations()
@@ -91,8 +48,9 @@ builder.Services.AddOptions<KafkaConsumerSettings>()
     .ValidateOnStart();
 builder.Services.AddHostedService<KafkaConsumer>();
 
-// === Регистрируем бд ===
+builder.Services.AddScoped<UserService>();
 
+// === Регистрируем бд ===
 builder.Services.Configure<MongoDbContext>(
     builder.Configuration.GetSection("UsersDatabase"));
 builder.Services.AddSingleton<IMongoClient>(sp =>
@@ -107,8 +65,7 @@ builder.Services.AddScoped<IMongoDatabase>(sp =>
     return client.GetDatabase(databaseName);
 });
 
-builder.Services.AddScoped<UserRepository<UserDTO>>();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<MongoDbRepository<User>>();
 
 // === регистрируем кэш ===
 builder.Services.AddStackExchangeRedisCache(options =>
@@ -119,54 +76,22 @@ builder.Services.AddStackExchangeRedisCache(options =>
 builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
     ConnectionMultiplexer.Connect(builder.Configuration["RedisCache:Configuration"]));
 
-// === Регистрация репозиториев с данными ===
-/*builder.Services.AddScoped<MongoDbRepository<Landlord>>();
-builder.Services.AddScoped<IRepository<Landlord>>(provider =>
-{
-    var r = provider.GetRequiredService<MongoDbRepository<Landlord>>();
-    var c = provider.GetRequiredService<IDistributedCache>();
-    return new CachedRepository<Landlord>(r, c);
-});
+// === Регистрация GraphQL ===
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>()
+    .AddProjections()
+    .AddFiltering()
+    .AddSorting();
 
-builder.Services.AddScoped<MongoDbRepository<RentalContract>>();
-builder.Services.AddScoped<IRepository<RentalContract>>(provider =>
-{
-    var r = provider.GetRequiredService<MongoDbRepository<RentalContract>>();
-    var c = provider.GetRequiredService<IDistributedCache>();
-    return new CachedRepository<RentalContract>(r, c);
-});
-
-builder.Services.AddScoped<MongoDbRepository<Space>>();
-builder.Services.AddScoped<IRepository<Space>>(provider =>
-{
-    var r = provider.GetRequiredService<MongoDbRepository<Space>>();
-    var c = provider.GetRequiredService<IDistributedCache>();
-    return new CachedRepository<Space>(r, c);
-});
-
-builder.Services.AddScoped<MongoDbRepository<Tenant>>();
-builder.Services.AddScoped<IRepository<Tenant>>(provider =>
-{
-    var r = provider.GetRequiredService<MongoDbRepository<Tenant>>();
-    var c = provider.GetRequiredService<IDistributedCache>();
-    return new CachedRepository<Tenant>(r, c);
-});
-*/
-// =========
-
+// === регистрация метрик ===
 builder.Services.AddMetrics();
 builder.Services.AddHostedService<MetricsUpdateService>();
 
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
@@ -174,7 +99,7 @@ app.UseHttpMetrics();
 
 app.MapMetrics();
 
-app.MapControllers();
+app.MapGraphQL(path: "/graphql");
 
 app.Run();
 

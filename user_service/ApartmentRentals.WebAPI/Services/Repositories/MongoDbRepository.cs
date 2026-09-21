@@ -52,8 +52,11 @@ namespace ApartmentRentals.WebAPI.Services.Repositories
         public async Task<T?> GetByIdAsync(string id) =>
             await collection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
-        public async Task CreateAsync(T newObject) =>
+        public async Task<string> CreateAsync(T newObject)
+        {
             await collection.InsertOneAsync(newObject);
+            return newObject.Id;
+        }
 
         public async Task<bool> UpdateAsync(string id, T updatedObject)
         {

@@ -6,9 +6,8 @@ using System.Text.Json;
 using System.Threading;
 using static Prometheus.MetricServerMiddleware;
 using ApartmentRentals.Data.DTOs;
-using ApartmentRentals.UsersService;
 
-namespace ApartmentRentals.KafkaConsumer {
+namespace ApartmentRentals.WebAPI.kafka {
 
     public class KafkaConsumer : BackgroundService
     {
