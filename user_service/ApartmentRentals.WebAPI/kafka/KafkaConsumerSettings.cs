@@ -1,5 +1,5 @@
 using Confluent.Kafka;
-
+namespace KafkaSettings{
 public class KafkaConsumerSettings
 {
     public string BootstrapServers { get; set; } = "kafka:9092";
@@ -11,7 +11,8 @@ public class KafkaConsumerSettings
     public bool EnableIdempotence {get; set;} = true;
     public string ConsumerGroup { get; set; } = "aspnet-orders-service";
     
-    // 🔹 Опционально: дополнительные настройки
+    // дополнительные настройки
     public int ConnectionTimeoutMs { get; set; } = 30000;
     public int RetryCount { get; set; } = 3;
+}
 }

@@ -2,7 +2,7 @@
 
 namespace ApartmentRentals.Data.DTOs
 {
-    public class SpaceNoIdDTO
+    public class SpaceNoIdDto
     {
         // Основная инфо
         public SpaceType Category { get; set; }

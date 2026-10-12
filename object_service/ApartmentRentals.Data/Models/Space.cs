@@ -21,7 +21,7 @@ namespace ApartmentRentals.Data.Models
         public double Living { get; set; }
     }
 
-    public class Space : IModel
+    public class Space : Model
     {
         [BsonElement("category")]
         public SpaceType Category { get; set; }

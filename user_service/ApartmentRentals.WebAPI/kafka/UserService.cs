@@ -5,6 +5,7 @@ using System.Text.Json;
 using kafka.KafkaProducer;
 using System.Runtime.InteropServices.ObjectiveC;
 using ApartmentRentals.WebAPI.Services.Repositories;
+using KafkaSettings;
 
 namespace ApartmentRentals.WebAPI.kafka
 {
@@ -19,7 +20,7 @@ namespace ApartmentRentals.WebAPI.kafka
             _producerSettings = producerSettings.Value;
         }
 
-        public async Task registerObject(RegistrationObjectDTO reg) {
+        public async Task registerObject(RegistrationObjectDto reg) {
             var userId = reg.AuthorId;
             var user = await _userRepository.GetByIdAsync(userId);
 
@@ -27,7 +28,7 @@ namespace ApartmentRentals.WebAPI.kafka
                 user.registered_objects++;
                 await _userRepository.UpdateAsync(userId, user);
 
-                await _producer.SendAsync(JsonSerializer.Serialize(new ResponseDTO
+                await _producer.SendAsync(JsonSerializer.Serialize(new ResponseDto
                 {
                     UserId = userId,
                     Type = reg.Type,

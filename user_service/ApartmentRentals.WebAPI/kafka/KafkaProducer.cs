@@ -5,6 +5,8 @@ using System;
 using System.Threading.Tasks;
 using System.ComponentModel;
 
+using KafkaSettings;
+
 namespace kafka.KafkaProducer
 {
     public interface IKafkaProducer : IDisposable

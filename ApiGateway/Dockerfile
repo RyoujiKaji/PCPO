@@ -24,6 +24,9 @@ RUN dotnet publish "./ApiGateway.csproj" -c $BUILD_CONFIGURATION -o /app/publish
 
 FROM base AS final
 WORKDIR /app
+RUN adduser --system --no-create-home --shell /bin/sh --group nonroot
+
+USER nonroot
 COPY --from=publish /app/publish .
 
 ENTRYPOINT ["dotnet", "ApiGateway.dll"]

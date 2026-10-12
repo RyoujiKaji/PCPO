@@ -1,4 +1,5 @@
-﻿public class MetricsUpdateService : BackgroundService
+﻿namespace UserServiceMetrics{
+public class MetricsUpdateService : BackgroundService
 {
     private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(30);
 
@@ -17,4 +18,5 @@
             }
         }
     }
+}
 }

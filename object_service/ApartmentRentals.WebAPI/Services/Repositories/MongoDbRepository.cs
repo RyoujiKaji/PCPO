@@ -2,10 +2,11 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System.Reflection;
+using ApartmentRentals.Exceptions;
 
 namespace ApartmentRentals.WebAPI.Services.Repositories
 {
-    public class MongoDbRepository<T> : IRepository<T> where T : IModel
+    public class MongoDbRepository<T> : IRepository<T> where T : Model
     {
         private readonly IMongoCollection<T> collection;
         const long SAMPLE_NUM = 1000;

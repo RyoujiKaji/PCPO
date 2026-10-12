@@ -9,6 +9,8 @@ using kafka.KafkaProducer;
 using Confluent.Kafka;
 using ApartmentRentals.WebAPI.Services.GraphQL;
 using ApartmentRentals.WebAPI.kafka;
+using UserServiceMetrics;
+using KafkaSettings;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ApartmentRentals.Tests")]
 
@@ -74,7 +76,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = builder.Configuration["RedisCache:InstanceName"];
 });
 builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-    ConnectionMultiplexer.Connect(builder.Configuration["RedisCache:Configuration"]));
+    ConnectionMultiplexer.Connect(builder.Configuration["RedisCache:Configuration"]!));
 
 // === Регистрация GraphQL ===
 builder.Services

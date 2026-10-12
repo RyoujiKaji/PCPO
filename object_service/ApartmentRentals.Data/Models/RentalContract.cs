@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace ApartmentRentals.Data.Models
 {
-    public class RentalContract:IModel
+    public class RentalContract:Model
     {
         public string SpaceId { get; set; } = "0";
         public string TenantId { get; set; } = "0";

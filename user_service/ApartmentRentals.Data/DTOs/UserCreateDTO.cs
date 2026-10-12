@@ -3,7 +3,7 @@ using HotChocolate;
 
 namespace ApartmentRentals.Data.DTOs
 {
-    public class UserCreateDTO : User
+    public class UserCreateDto : User
     {
         [GraphQLIgnore]
         public new string Id { get; set; } = "";

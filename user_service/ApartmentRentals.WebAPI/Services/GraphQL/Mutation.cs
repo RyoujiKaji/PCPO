@@ -14,7 +14,7 @@ namespace ApartmentRentals.WebAPI.Services.GraphQL
             _userService = userService;
         }
 
-        public async Task<string> CreateAsync(UserCreateDTO dto)
+        public async Task<string> CreateAsync(UserCreateDto dto)
         {
             User user = new User
             {
@@ -24,7 +24,7 @@ namespace ApartmentRentals.WebAPI.Services.GraphQL
             return await _userService.CreateAsync(user);
         }
 
-        public async Task<bool> UpdateAsync(string id, UserDTO dto) =>
+        public async Task<bool> UpdateAsync(string id, UserDto dto) =>
              await _userService.UpdateAsync(id, new User
              {
                  Name = dto.Name,

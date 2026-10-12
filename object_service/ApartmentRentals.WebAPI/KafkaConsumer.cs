@@ -5,6 +5,7 @@ using Confluent.Kafka;
 using Microsoft.Extensions.Options;
 using ApartmentRentals.Data.DTOs;
 using ApartmentRentals.Services;
+using ApartmentRentals.Kafka.Settings;
 
 using System.Text.Json;
 
@@ -34,7 +35,7 @@ namespace ApartmentRentals.KafkaConsumer {
 
             _logger.LogInformation("ExecuteAsync");
 
-            IConsumer<string, string> consumer = null;
+            IConsumer<string, string>? consumer = null;
             try
             {
                 var config = new ConsumerConfig
@@ -71,7 +72,7 @@ namespace ApartmentRentals.KafkaConsumer {
             }
             catch (Exception e)
             {
-                _logger.LogInformation($"Exception {e.Data} {e.Message}");
+                _logger.LogInformation("Exception Data: {Data}, Message: {Message}", e.Data, e.Message);
             }
             finally
             {
@@ -85,11 +86,11 @@ namespace ApartmentRentals.KafkaConsumer {
         {
             try
             {
-                var data = JsonSerializer.Deserialize<ReceivedObjectDTO>(message);
-
-                _logger.LogInformation($"Consume {data.Type} from {_topic}");
+                var data = JsonSerializer.Deserialize<ReceivedObjectDto>(message);
 
                 if (data == null) return;
+
+                _logger.LogInformation("Consume {data.Type} from {_topic}", data.Type, _topic);
 
                 if (data.Type == ObjectType.Landlord)
                 {
@@ -127,7 +128,7 @@ namespace ApartmentRentals.KafkaConsumer {
             }
             catch (Exception e)
             {
-                _logger.LogInformation($"Exception {e.Data} {e.Message}");
+                _logger.LogInformation("Exception Data: {Data}, Message: {Message}", e.Data, e.Message);
             }
         }
     }

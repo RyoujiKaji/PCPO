@@ -11,8 +11,8 @@ namespace AuthService
         public int Expires { get; } = 300;
         public int RefreshExpires { get; } = 600;
 
-        private IOptions<AuthOption> authOption;
-        private IRepository<UserCredentials> repository;
+        readonly private IOptions<AuthOption> authOption;
+        readonly private IRepository<UserCredentials> repository;
 
         public TokenGenerator(IOptions<AuthOption> authOption, IRepository<UserCredentials> repository)
         {
@@ -24,6 +24,10 @@ namespace AuthService
         {
             var user = await repository.GetByIdAsync(userId);
             if (user == null) throw new ArgumentException("User not exist");
+            if (user.Id == null)
+            {
+                throw new ArgumentException("UserId not exist");
+            }
 
             return (GenerateAccessToken(user.Id, user.Email), GenerateRefreshToken(user.Id, user.Version));
         }
@@ -71,25 +75,47 @@ namespace AuthService
             if (RefreshExpires != refreshClaims.expires) throw new UnauthorizedAccessException();
             if (userId != refreshClaims.userId) throw new UnauthorizedAccessException();
             var user = await repository.GetByIdAsync(userId) ?? throw new UnauthorizedAccessException();
+            if (user.Id == null)
+            {
+                throw new ArgumentException("UserId not exist");
+            }
+            
             if (refreshClaims.version != user.Version)
                 throw new UnauthorizedAccessException();
 
             return (GenerateAccessToken(user.Id, user.Email), GenerateRefreshToken(user.Id, user.Version));
         }
 
-        private string? GetUserIdFromToken(string token) => new JwtSecurityTokenHandler().ReadJwtToken(token).
+        private static string? GetUserIdFromToken(string token) => new JwtSecurityTokenHandler().ReadJwtToken(token).
             Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
-        private (string userId, int version, int expires) DecodeRefreshToken(string token)
+        private static (string userId, int version, int expires) DecodeRefreshToken(string token)
         {
             try
             {
                 var claims = new JwtSecurityTokenHandler().ReadJwtToken(token).Claims;
-                return (claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value,
-                int.Parse(claims.FirstOrDefault(x => x.Type == ClaimTypes.Version).Value),
-                int.Parse(claims.First(c => c.Type == "exp").Value));
+
+                var nameIdentifierClaim = claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+                var versionClaim = claims.FirstOrDefault(x => x.Type == ClaimTypes.Version);
+                var expClaim = claims.FirstOrDefault(c => c.Type == "exp");
+
+                if (nameIdentifierClaim == null)
+                    throw new BadHttpRequestException("Missing 'nameidentifier' claim in token", StatusCodes.Status400BadRequest);
+        
+                if (versionClaim == null)
+                    throw new BadHttpRequestException("Missing 'version' claim in token", StatusCodes.Status400BadRequest);
+
+                if (expClaim == null)
+                    throw new BadHttpRequestException("Missing 'exp' claim in token", StatusCodes.Status400BadRequest);
+
+                if (!int.TryParse(versionClaim.Value, out var version)) throw new BadHttpRequestException("Invalid 'version' claim format (must be integer)", StatusCodes.Status400BadRequest);
+
+                if (!int.TryParse(expClaim.Value, out var expires))
+                    throw new BadHttpRequestException("Invalid 'exp' claim format (must be integer)", StatusCodes.Status400BadRequest);
+
+                return (nameIdentifierClaim.Value, version, expires);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new BadHttpRequestException("", 400);
             }

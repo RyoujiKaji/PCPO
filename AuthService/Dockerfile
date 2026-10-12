@@ -24,5 +24,9 @@ RUN dotnet publish "./AuthService.csproj" -c $BUILD_CONFIGURATION -o /app/publis
 # Этот этап используется в рабочей среде или при запуске из VS в обычном режиме (по умолчанию, когда конфигурация отладки не используется)
 FROM base AS final
 WORKDIR /app
+RUN adduser --system --no-create-home --shell /bin/sh --group nonroot
+
+USER nonroot
+
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "AuthService.dll"]

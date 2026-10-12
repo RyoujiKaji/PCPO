@@ -12,7 +12,8 @@ using ApartmentRentals.KafkaConsumer;
 using Confluent.Kafka;
 using ApartmentRentals.Services;
 using Microsoft.OpenApi.Models;
-
+using ApartmentRentals.Kafka.Settings;
+using ApartmentRentals.Metrics;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ApartmentRentals.Tests")]
 
@@ -112,7 +113,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = builder.Configuration["RedisCache:InstanceName"];
 });
 builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
-    ConnectionMultiplexer.Connect(builder.Configuration["RedisCache:Configuration"]));
+    ConnectionMultiplexer.Connect(builder.Configuration["RedisCache:Configuration"]!));
 
 // === Регистрация репозиториев с данными ===
 builder.Services.AddScoped<MongoDbRepository<Landlord>>();

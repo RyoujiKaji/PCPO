@@ -23,6 +23,9 @@ RUN dotnet publish "ApartmentRentals.WebAPI.csproj" \
 
 FROM base AS final
 WORKDIR /app
+RUN adduser --system --no-create-home --shell /bin/sh --group nonroot
+
+USER nonroot
 COPY --from=build /app/publish .
 
 ENTRYPOINT ["dotnet", "ApartmentRentals.WebAPI.dll"]

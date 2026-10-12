@@ -8,7 +8,7 @@ WORKDIR /src
 
 COPY ["ApartmentRentals.sln", "./"]
 COPY ["ApartmentRentals.WebAPI/ApartmentRentals.WebAPI.csproj", "ApartmentRentals.WebAPI/"]
-COPY ["ApartmentRentals.Data/ApartmentRentals.Data.csproj", "ApartmentRentals.Data/"]
+COPY ["ApartmentRentals.Data/UserService.Data.csproj", "ApartmentRentals.Data/"]
 
 COPY . .
 
@@ -22,6 +22,10 @@ RUN dotnet publish "ApartmentRentals.WebAPI.csproj" \
 
 FROM base AS final
 WORKDIR /app
+
+RUN adduser --system --no-create-home --shell /bin/sh --group nonroot
+
+USER nonroot
 COPY --from=build /app/publish .
 
 ENTRYPOINT ["dotnet", "ApartmentRentals.WebAPI.dll"]

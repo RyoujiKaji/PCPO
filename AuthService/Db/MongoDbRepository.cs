@@ -27,11 +27,11 @@ namespace AuthService.Db
             return count > 0;
         }
 
-        public async Task<bool> ChangePassAsync(string email, string pass)
+        public async Task<bool> ChangePassAsync(string email, string password)
         {
             var filter = Builders<UserCredentials>.Filter.Eq(x => x.Email, email);
             var update = Builders<UserCredentials>.Update
-                .Set(x => x.Pass, pass)
+                .Set(x => x.Pass, password)
                 .Inc(x => x.Version, 1);
 
             var result = await collection.UpdateOneAsync(filter, update);

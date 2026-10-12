@@ -2,7 +2,7 @@
 
 namespace ApartmentRentals.Data.DTOs
 {
-    public class RentalContractNoIdDTO
+    public class RentalContractNoIdDto
     {
         public int SpaceId { get; set; } = 0;
         public int TenantId { get; set; } = 0;

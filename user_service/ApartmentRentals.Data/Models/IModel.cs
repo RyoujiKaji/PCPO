@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace ApartmentRentals.Data.Models
 {
-    public abstract class IModel
+    public abstract class Model
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

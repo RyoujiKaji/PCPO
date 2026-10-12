@@ -2,7 +2,7 @@
 
 namespace ApartmentRentals.Data.DTOs
 {
-    public class SpaceListDTO
+    public class SpaceListDto
     {
         public string Id { get; set; } = "";
         public string Title { get; set; } = string.Empty;

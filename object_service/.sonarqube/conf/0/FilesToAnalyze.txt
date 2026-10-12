@@ -1,0 +1,17 @@
+﻿D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\DTOs\LandlordNoIdDTO.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\DTOs\ReceivedObjectDTO.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\DTOs\RegistrationObjectDTO.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\DTOs\RentalContractNoIdDTO.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\DTOs\SpaceListDTO.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\DTOs\SpaceNoIdDTO.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\DTOs\TenantNoIdDTO.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\DTOs\UserNoIdDTO.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\MappingProfile.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\Models\IModel.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\Models\Landlord.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\Models\RegistrationStatus.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\Models\RentalContract.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\Models\Space.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\Models\Tenant.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\Models\User.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\object_service\ApartmentRentals.Data\ApartmentRentals.Data.csproj.lscache

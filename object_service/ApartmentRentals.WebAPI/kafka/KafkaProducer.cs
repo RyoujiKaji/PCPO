@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using ApartmentRentals.Kafka.Settings;
 
 namespace ApartmentRentals.kafka.KafkaProducer
 {
@@ -35,7 +36,7 @@ namespace ApartmentRentals.kafka.KafkaProducer
             try
             {
                 await _producer.ProduceAsync(_topic, new Message<string, string> { Key = "uniq1", Value = message });
-                _logger.LogInformation($"Sending {message} to {_topic}");
+                _logger.LogInformation("Sending {message} to {_topic}", message, _topic);
             } 
             catch(ProduceException<Null,string> ex)
             {
