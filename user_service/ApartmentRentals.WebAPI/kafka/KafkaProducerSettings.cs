@@ -1,4 +1,5 @@
 using Confluent.Kafka;
+namespace KafkaSettings{
 
 public class KafkaProducerSettings
 {
@@ -11,4 +12,5 @@ public class KafkaProducerSettings
 
     public int ConnectionTimeoutMs { get; set; } = 30000;
     public int RetryCount { get; set; } = 3;
+}
 }

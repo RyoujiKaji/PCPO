@@ -5,6 +5,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ApartmentRentals.kafka.KafkaProducer;
 using System.Text.Json;
+using ApartmentRentals.Exceptions;
+
+namespace ApartmentRentals.WebAPI.Controllers
+{
 
 [Route("api/[controller]")]
 [ApiController]
@@ -50,7 +54,7 @@ public class TenantController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync(TenantNoIdDTO dto)
+    public async Task<IActionResult> CreateAsync(TenantNoIdDto dto)
     {
         var Tenant = _mapper.Map<Tenant>(dto);
 
@@ -61,7 +65,7 @@ public class TenantController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateAsync(string id, TenantNoIdDTO dto) =>
+    public async Task<IActionResult> UpdateAsync(string id, TenantNoIdDto dto) =>
         await _tenantService.UpdateAsync(id, _mapper.Map<Tenant>(dto)) ? NoContent() : NotFound();
 
     [HttpDelete("{id}")]
@@ -74,8 +78,8 @@ public class TenantController : ControllerBase
         return Ok();
     }
 
-    private void SendRegRequest(Tenant tenant) {
-        RegistrationObjectDTO reg = new RegistrationObjectDTO()
+    private async void SendRegRequest(Tenant tenant) {
+        RegistrationObjectDto reg = new RegistrationObjectDto()
         {
             Type = ApartmentObjectType.Tenant,
             Id = tenant.Id,
@@ -84,6 +88,7 @@ public class TenantController : ControllerBase
 
         string message = JsonSerializer.Serialize(reg);
 
-        _producer.SendAsync(message);
+        await _producer.SendAsync(message);
     }
+}
 }

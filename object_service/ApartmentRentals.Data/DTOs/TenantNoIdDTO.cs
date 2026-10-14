@@ -1,6 +1,6 @@
 ﻿namespace ApartmentRentals.Data.DTOs
 {
-    public class TenantNoIdDTO : UserNoIdDTO
+    public class TenantNoIdDto : UserNoIdDto
     {
         public bool HasPets { get; set; }
         public bool HasChildren { get; set; }

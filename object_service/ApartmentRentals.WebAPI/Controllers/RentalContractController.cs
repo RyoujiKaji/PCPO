@@ -5,6 +5,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ApartmentRentals.kafka.KafkaProducer;
 using System.Text.Json;
+using System.Threading.Tasks;
+using ApartmentRentals.Exceptions;
+
+namespace ApartmentRentals.WebAPI.Controllers
+{
 
 [Route("api/[controller]")]
 [ApiController]
@@ -49,18 +54,18 @@ public class RentalContractController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateAsync(RentalContractNoIdDTO dto)
+    public async Task<IActionResult> CreateAsync(RentalContractNoIdDto dto)
     {
         var rentalContract = _mapper.Map<RentalContract>(dto);
 
         await _rentalService.CreateAsync(rentalContract);
-        SendRegRequest(rentalContract);
+        await SendRegRequest(rentalContract);
 
         return CreatedAtAction(nameof(GetAsync), new { id = rentalContract.Id }, rentalContract);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateAsync(string id, RentalContractNoIdDTO dto) => 
+    public async Task<IActionResult> UpdateAsync(string id, RentalContractNoIdDto dto) => 
         await _rentalService.UpdateAsync(id, _mapper.Map<RentalContract>(dto)) ? NoContent() : NotFound();
 
     [HttpDelete("{id}")]
@@ -73,8 +78,8 @@ public class RentalContractController : ControllerBase
         return Ok();
     }
 
-    private void SendRegRequest(RentalContract rentalContract) {
-        RegistrationObjectDTO reg = new RegistrationObjectDTO()
+    private async Task SendRegRequest(RentalContract rentalContract) {
+        RegistrationObjectDto reg = new RegistrationObjectDto()
         {
             Type = ApartmentObjectType.RentalContract,
             Id = rentalContract.Id,
@@ -83,6 +88,7 @@ public class RentalContractController : ControllerBase
 
         string message = JsonSerializer.Serialize(reg);
 
-        _producer.SendAsync(message);
+        await _producer.SendAsync(message);
     }
+}
 }

@@ -4,7 +4,7 @@ using System.Text.Json;
 
 namespace ApartmentRentals.WebAPI.Services.Repositories
 {
-    public class CachedRepository<T> : IRepository<T> where T : IModel
+    public class CachedRepository<T> : IRepository<T> where T : Model
     {
         private IRepository<T> Repository { get; set; }
         private IDistributedCache Cache { get; set; }
@@ -33,7 +33,7 @@ namespace ApartmentRentals.WebAPI.Services.Repositories
             {
                 objects = await Repository.GetAllAsync();
 
-                if (objects.Count() != 0)
+                if (objects.Any())
                 {
                     var serializedData = JsonSerializer.Serialize(objects);
                     var cacheOptions = new DistributedCacheEntryOptions()
@@ -59,7 +59,7 @@ namespace ApartmentRentals.WebAPI.Services.Repositories
             {
                 objects = await Repository.GetFilteredByPropertyAsync(propertyName, value);
 
-                if (objects.Count() != 0)
+                if (objects.Any())
                 {
                     var serializedData = JsonSerializer.Serialize(objects);
                     var cacheOptions = new DistributedCacheEntryOptions()

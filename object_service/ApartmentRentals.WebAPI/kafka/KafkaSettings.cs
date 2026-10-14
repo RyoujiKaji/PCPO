@@ -1,6 +1,8 @@
 using ApartmentRentals.Models;
 using Confluent.Kafka;
 
+namespace ApartmentRentals.Kafka.Settings
+{
 public class KafkaSettings
 {
     public string BootstrapServers { get; set; } = "kafka:9092";
@@ -15,4 +17,5 @@ public class KafkaSettings
     // 🔹 Опционально: дополнительные настройки
     public int ConnectionTimeoutMs { get; set; } = 30000;
     public int RetryCount { get; set; } = 3;
+}
 }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using ApartmentRentals.WebAPI.Services.Repositories;
 using ApartmentRentals.kafka.KafkaProducer;
 using System.Text.Json;
+using ApartmentRentals.Exceptions;
 
 namespace ApartmentRentals.WebAPI.Controllers
 {
@@ -36,7 +37,7 @@ namespace ApartmentRentals.WebAPI.Controllers
                 return Ok(spaces.ToList());
             }
 
-            var shortRes = _mapper.Map<IEnumerable<SpaceListDTO>>(spaces);
+            var shortRes = _mapper.Map<IEnumerable<SpaceListDto>>(spaces);
             return Ok(shortRes.ToList());
         }
 
@@ -76,7 +77,7 @@ namespace ApartmentRentals.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(string id, SpaceNoIdDTO s) => 
+        public async Task<IActionResult> UpdateAsync(string id, SpaceNoIdDto s) => 
             await _spaceService.UpdateAsync(id, _mapper.Map<Space>(s)) ? NoContent() : NotFound();
 
 
@@ -90,8 +91,8 @@ namespace ApartmentRentals.WebAPI.Controllers
             return Ok();
         }
 
-    private void SendRegRequest(Space space) {
-        RegistrationObjectDTO reg = new RegistrationObjectDTO()
+    private async void SendRegRequest(Space space) {
+        RegistrationObjectDto reg = new RegistrationObjectDto()
         {
             Type = ApartmentObjectType.Space,
             Id = space.Id,
@@ -100,7 +101,7 @@ namespace ApartmentRentals.WebAPI.Controllers
 
         string message = JsonSerializer.Serialize(reg);
 
-        _producer.SendAsync(message);
+        await _producer.SendAsync(message);
     }
 }
 }

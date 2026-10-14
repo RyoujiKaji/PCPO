@@ -1,0 +1,7 @@
+﻿D:\Пгу\Микросервисы\PCPO\PCPO\user_service\ApartmentRentals.Data\DTOs\RegistrationObjectDTO.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\user_service\ApartmentRentals.Data\DTOs\ResponseDTO.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\user_service\ApartmentRentals.Data\DTOs\UserCreateDTO.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\user_service\ApartmentRentals.Data\DTOs\UserDTO.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\user_service\ApartmentRentals.Data\Models\IModel.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\user_service\ApartmentRentals.Data\Models\User.cs
+D:\Пгу\Микросервисы\PCPO\PCPO\user_service\ApartmentRentals.Data\ApartmentRentals.Data.csproj.lscache

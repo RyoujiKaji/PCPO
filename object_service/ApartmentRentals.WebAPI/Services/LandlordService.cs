@@ -12,7 +12,7 @@ namespace ApartmentRentals.Services {
             _landlordService = landlordService;
         }
 
-        public async Task UpdateRegistrationAsync(ReceivedObjectDTO receivedObject) {
+        public async Task UpdateRegistrationAsync(ReceivedObjectDto receivedObject) {
             var objId = receivedObject.ObjectId;
             var foundObj = await _landlordService.GetByIdAsync(objId);
             if (foundObj != null) {

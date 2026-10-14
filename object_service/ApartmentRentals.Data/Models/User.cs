@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace ApartmentRentals.Data.Models
 {
-    public abstract class User : IModel
+    public abstract class User : Model
     {
         [BsonElement("surname")]
         public string Surname { get; set; } = string.Empty;

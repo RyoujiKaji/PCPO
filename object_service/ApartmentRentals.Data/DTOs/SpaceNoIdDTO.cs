@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ApartmentRentals.Data.DTOs
 {
-    public class SpaceNoIdDTO
+    public class SpaceNoIdDto
     {
         public SpaceType Category { get; set; }
         public string Title { get; set; } = string.Empty;

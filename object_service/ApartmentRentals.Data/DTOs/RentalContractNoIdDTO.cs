@@ -2,7 +2,7 @@
 
 namespace ApartmentRentals.Data.DTOs
 {
-    public class RentalContractNoIdDTO
+    public class RentalContractNoIdDto
     {
         public string SpaceId { get; set; } = "";
         public string TenantId { get; set; } = "";

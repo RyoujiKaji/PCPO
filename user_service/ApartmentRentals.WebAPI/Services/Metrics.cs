@@ -1,4 +1,6 @@
-﻿using Prometheus;
+﻿namespace UserServiceMetrics{
+
+using Prometheus;
 
 public static class UptimeMetrics
 {
@@ -17,4 +19,5 @@ public static class UptimeMetrics
     }
 
     private static readonly DateTime _startTime = DateTime.UtcNow;
+}
 }

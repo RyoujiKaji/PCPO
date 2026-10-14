@@ -2,10 +2,10 @@ using System.Text.Json;
 using Confluent.Kafka;
 using Microsoft.Extensions.Options;
 using Prometheus;
-using System.Text.Json;
 using System.Threading;
 using static Prometheus.MetricServerMiddleware;
 using ApartmentRentals.Data.DTOs;
+using KafkaSettings;
 
 namespace ApartmentRentals.WebAPI.kafka {
 
@@ -33,7 +33,7 @@ namespace ApartmentRentals.WebAPI.kafka {
 
             _logger.LogInformation("ExecuteAsync");
 
-            IConsumer<string, string> consumer = null;
+            IConsumer<string, string>? consumer = null;
             try
             {
                 var config = new ConsumerConfig
@@ -55,7 +55,7 @@ namespace ApartmentRentals.WebAPI.kafka {
                     {
                         var consumeResult = consumer.Consume(TimeSpan.FromMilliseconds(500));
 
-                        _logger.LogInformation($"Consume {consumeResult} from {_topic}");
+                        _logger.LogInformation("Consume {consumeResult} from {_topic}", consumeResult, _topic);
 
                         if (consumeResult != null && !consumeResult.IsPartitionEOF)
                         {
@@ -70,7 +70,7 @@ namespace ApartmentRentals.WebAPI.kafka {
             }
             catch (Exception e)
             {
-                _logger.LogInformation($"Exception {e.Data} {e.Message}");
+                _logger.LogInformation("Exception {e.Data} {e.Message}", e.Data, e.Message);
             }
             finally
             {
@@ -85,8 +85,8 @@ namespace ApartmentRentals.WebAPI.kafka {
             try
             {
                 _logger.LogInformation($"start process");
-                var data = JsonSerializer.Deserialize<RegistrationObjectDTO>(message);
-                _logger.LogInformation($"json : {message}   {data}");
+                var data = JsonSerializer.Deserialize<RegistrationObjectDto>(message);
+                _logger.LogInformation("json : {message}   {data}", message, data);
                 if (data != null)
                 {
                     using (var scope = _scopeFactory.CreateScope())
@@ -101,7 +101,7 @@ namespace ApartmentRentals.WebAPI.kafka {
             }
             catch (Exception e)
             {
-               _logger.LogInformation($"Exception {e.Data} {e.Message}");
+               _logger.LogInformation("Exception {e.Data} {e.Message}", e.Data, e.Message);
             }
         }
     }

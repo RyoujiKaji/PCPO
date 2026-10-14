@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36930.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApartmentRentals.WebAPI", "ApartmentRentals.WebAPI\ApartmentRentals.WebAPI.csproj", "{230457F0-7365-4C89-9EB0-B0C99051C38F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApartmentRentals.Data", "ApartmentRentals.Data\ApartmentRentals.Data.csproj", "{E87E7DED-F1AE-48CD-85E7-46466613F0D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApartmentRentals.Data", "ApartmentRentals.Data\UserService.Data.csproj", "{E87E7DED-F1AE-48CD-85E7-46466613F0D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

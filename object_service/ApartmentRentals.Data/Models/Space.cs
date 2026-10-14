@@ -5,7 +5,7 @@ namespace ApartmentRentals.Data.Models
 {
     public enum SpaceType { Apartment, Room, BedPlace, House, PartOfHouse}
 
-    public class Space : IModel
+    public class Space : Model
     {
         [BsonElement("category")]
         public SpaceType Category { get; set; }

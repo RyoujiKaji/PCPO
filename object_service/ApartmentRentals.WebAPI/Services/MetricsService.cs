@@ -1,4 +1,7 @@
-﻿public class MetricsUpdateService : BackgroundService
+﻿namespace ApartmentRentals.Metrics
+{
+
+public class MetricsUpdateService : BackgroundService
 {
     private readonly TimeSpan _updateInterval = TimeSpan.FromSeconds(30);
 
@@ -17,4 +20,5 @@
             }
         }
     }
+}
 }
