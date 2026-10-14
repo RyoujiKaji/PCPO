@@ -1,39 +1,24 @@
 ﻿using ApartmentRentals.Data.Models;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ApartmentRentals.Data.DTOs
 {
     public class SpaceNoIdDTO
     {
-        // Основная инфо
         public SpaceType Category { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
-
-        // Комнатность и цена
-        public int RoomCount { get; set; }
         public decimal Price { get; set; }
-        public RentalTerm Term { get; set; }
 
-        // Площадь и этаж
-        public Area Area { get; set; } = new();
-        public int Floor { get; set; }
-        public int TotalFloors { get; set; }
+        public string LandlordId { get; set; } = "";
+        public DateTime PublishedAt { get; set; } = DateTime.Now;
 
-        // Характеристики дома
-        public int BuildYear { get; set; }
-        public HouseType Material { get; set; }
-
-        // Условия проживания
-        public bool AllowsChildren { get; set; }
-        public bool AllowsPets { get; set; }
-
-        // фото
-        public List<SpacePhoto> Photos { get; set; } = new();
-
-        // Связи
-        public int LandlordId { get; set; } = 0;
-
-        public string AuthorId {get; set;} = "string";
-        public RegistrationStatus RegStatus {get; init;}
+        public RegistrationStatus RegStatus { get; set; } = RegistrationStatus.NOT_REGISTRATED;
+        public string AuthorId { get; set; } = string.Empty;
     }
 }

@@ -8,7 +8,7 @@ using ApartmentRentals.Services;
 
 using System.Text.Json;
 
-namespace ApartmentRentals.KafkaConsumer {
+namespace ApartmentRentals.WebAPI.kafka {
 
     public class KafkaConsumer : BackgroundService
     {
@@ -91,7 +91,7 @@ namespace ApartmentRentals.KafkaConsumer {
 
                 if (data == null) return;
 
-                if (data.Type == ObjectType.Landlord)
+                if (data.Type == ApartmentObjectType.Landlord)
                 {
                     using (var scope = _scopeFactory.CreateScope())
                     {
@@ -99,7 +99,7 @@ namespace ApartmentRentals.KafkaConsumer {
                         await landlordService.UpdateRegistrationAsync(data);
                     }
                 }
-                if (data.Type == ObjectType.Tenant)
+                if (data.Type == ApartmentObjectType.Tenant)
                 {
                     using (var scope = _scopeFactory.CreateScope())
                     {
@@ -107,7 +107,7 @@ namespace ApartmentRentals.KafkaConsumer {
                         await tenantService.UpdateRegistrationAsync(data);
                     }
                 }
-                if (data.Type == ObjectType.Space)
+                if (data.Type == ApartmentObjectType.Space)
                 {
                     using (var scope = _scopeFactory.CreateScope())
                     {
@@ -115,7 +115,7 @@ namespace ApartmentRentals.KafkaConsumer {
                         await spaceService.UpdateRegistrationAsync(data);
                     }
                 }
-                if (data.Type == ObjectType.RentalContract)
+                if (data.Type == ApartmentObjectType.RentalContract)
                 {
                     using (var scope = _scopeFactory.CreateScope())
                     {

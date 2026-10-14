@@ -57,6 +57,31 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
+          "Host": "apartmentrentals",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/graphql/apartmentrentals/{everything}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/graphql/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "apartmentrentals",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/graphql/apartmentrentals/{everything}",
+      "UpstreamHttpMethod": [ "POST" ],
+      "AuthenticationOptions": { "AuthenticationProviderKey": "Bearer" }
+    },
+    {
+      "DownstreamPathTemplate": "/graphql/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
           "Host": "user_services",
           "Port": 8080
         }

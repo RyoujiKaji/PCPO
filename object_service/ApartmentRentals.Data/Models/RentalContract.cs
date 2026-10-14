@@ -15,6 +15,5 @@ namespace ApartmentRentals.Data.Models
 
         public RegistrationStatus RegStatus {get; set;}
         public string AuthorId {get; set;} = string.Empty;
-        //public decimal FinalPrice { get; set; } //Итоговая цена
     }
 }

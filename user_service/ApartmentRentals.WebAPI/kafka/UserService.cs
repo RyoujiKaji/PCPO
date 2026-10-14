@@ -10,10 +10,10 @@ namespace ApartmentRentals.WebAPI.kafka
 {
     public class UserService
     {
-        private readonly MongoDbRepository<User> _userRepository;
+        private readonly IRepository<User> _userRepository;
         private readonly KafkaProducer _producer;
         private readonly KafkaProducerSettings _producerSettings;
-        public UserService(MongoDbRepository<User> userRepository, KafkaProducer producer, IOptions<KafkaProducerSettings> producerSettings) {
+        public UserService(IRepository<User> userRepository, KafkaProducer producer, IOptions<KafkaProducerSettings> producerSettings) {
             _userRepository = userRepository;
             _producer = producer;
             _producerSettings = producerSettings.Value;

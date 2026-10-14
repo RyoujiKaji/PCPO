@@ -1,17 +1,18 @@
 using ApartmentRentals.Data.Models;
+using ApartmentRentals.kafka.KafkaProducer;
 using ApartmentRentals.Models;
+using ApartmentRentals.Services;
+using ApartmentRentals.WebAPI.kafka;
 using ApartmentRentals.WebAPI.Services;
+using ApartmentRentals.WebAPI.Services.GraphQL;
 using ApartmentRentals.WebAPI.Services.Repositories;
+using Confluent.Kafka;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using Prometheus;
 using StackExchange.Redis;
-using ApartmentRentals.kafka.KafkaProducer;
-using ApartmentRentals.KafkaConsumer;
-using Confluent.Kafka;
-using ApartmentRentals.Services;
-using Microsoft.OpenApi.Models;
 
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ApartmentRentals.Tests")]
@@ -152,6 +153,15 @@ builder.Services.AddScoped<IRepository<Tenant>>(provider =>
 builder.Services.AddMetrics();
 builder.Services.AddHostedService<MetricsUpdateService>();
 
+// === Регистрация GraphQL ===
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>()
+    .AddProjections()
+    .AddFiltering()
+    .AddSorting();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -161,7 +171,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
@@ -170,6 +180,7 @@ app.UseHttpMetrics();
 app.MapMetrics();
 
 app.MapControllers();
+app.MapGraphQL(path: "/graphql");
 
 app.Run();
 

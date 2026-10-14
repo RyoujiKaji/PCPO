@@ -3,6 +3,6 @@
     public class LandlordNoIdDTO : UserNoIdDTO
     {
         public float Rating { get; set; }
-        public List<int> OwnedSpaceIds { get; set; } = new();
+        public List<string> OwnedSpaceIds { get; set; } = new();
     }
 }

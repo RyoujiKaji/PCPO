@@ -1,14 +1,15 @@
 using ApartmentRentals.Data.Models;
+using ApartmentRentals.WebAPI.kafka;
 using ApartmentRentals.WebAPI.Services;
+using ApartmentRentals.WebAPI.Services.GraphQL;
 using ApartmentRentals.WebAPI.Services.Repositories;
+using Confluent.Kafka;
+using kafka.KafkaProducer;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Prometheus;
 using StackExchange.Redis;
-using kafka.KafkaProducer;
-using Confluent.Kafka;
-using ApartmentRentals.WebAPI.Services.GraphQL;
-using ApartmentRentals.WebAPI.kafka;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("ApartmentRentals.Tests")]
 
@@ -65,7 +66,7 @@ builder.Services.AddScoped<IMongoDatabase>(sp =>
     return client.GetDatabase(databaseName);
 });
 
-builder.Services.AddScoped<MongoDbRepository<User>>();
+builder.Services.AddScoped<IRepository<User>, MongoDbRepository<User>>();
 
 // === регистрируем кэш ===
 builder.Services.AddStackExchangeRedisCache(options =>

@@ -65,7 +65,7 @@ namespace ApartmentRentals.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(SpaceNoIdDTO s)
+        public async Task<IActionResult> CreateAsync(SpaceCreateDTO s)
         {
             var space = _mapper.Map<Space>(s);
 
@@ -93,7 +93,7 @@ namespace ApartmentRentals.WebAPI.Controllers
     private void SendRegRequest(Space space) {
         RegistrationObjectDTO reg = new RegistrationObjectDTO()
         {
-            Type = ObjectType.Space,
+            Type = ApartmentObjectType.Space,
             Id = space.Id,
             AuthorId = space.AuthorId
         };

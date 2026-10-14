@@ -73,7 +73,7 @@ public class LandlordController : ControllerBase
     private void SendRegRequest(Landlord l) {
         RegistrationObjectDTO reg = new RegistrationObjectDTO()
         {
-            Type = ObjectType.Landlord,
+            Type = ApartmentObjectType.Landlord,
             Id = l.Id,
             AuthorId = l.AuthorId
         };

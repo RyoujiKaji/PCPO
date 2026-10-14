@@ -8,6 +8,7 @@ namespace ApartmentRentals.Models
     {
         public MappingProfile()
         {
+            CreateMap<SpaceCreateDTO, Space>();
             CreateMap<SpaceNoIdDTO, Space>();
             CreateMap<Space, SpaceListDTO>();
             CreateMap<LandlordNoIdDTO, Landlord>();

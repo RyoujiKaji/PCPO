@@ -1,15 +1,14 @@
 ﻿using ApartmentRentals.Data.DTOs;
 using ApartmentRentals.Data.Models;
 using ApartmentRentals.WebAPI.Services.Repositories;
-using HotChocolate.Authorization;
 
 namespace ApartmentRentals.WebAPI.Services.GraphQL
 {
     public class Mutation
     {
-        private readonly MongoDbRepository<User> _userService;
+        private readonly IRepository<User> _userService;
 
-        public Mutation(MongoDbRepository<User> userService)
+        public Mutation(IRepository<User> userService)
         {
             _userService = userService;
         }
