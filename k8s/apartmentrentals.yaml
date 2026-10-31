@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apartmentrentals
+  namespace: app
+  labels:
+    app: apartmentrentals
+spec:
+  replicas: 2   # РЕПЛИКАЦИЯ — ключевое требование задания
+  selector:
+    matchLabels:
+      app: apartmentrentals
+  template:
+    metadata:
+      labels:
+        app: apartmentrentals
+    spec:
+      containers:
+      - name: apartmentrentals
+        image: apartmentrentals:latest
+        imagePullPolicy: Never   # ОБЯЗАТЕЛЬНО для локальных образов minikube
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ASPNETCORE_URLS
+          value: "http://+:8080"
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"
+        - name: ConnectionStrings__MongoDB
+          value: "mongodb://mongodb:27017/ApartmentRentals"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apartmentrentals
+  namespace: app
+  labels:
+    app: apartmentrentals
+spec:
+  selector:
+    app: apartmentrentals
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080

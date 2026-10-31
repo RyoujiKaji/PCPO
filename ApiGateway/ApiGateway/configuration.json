@@ -149,7 +149,7 @@
         {
           "Name": "Auth Service API",
           "Version": "v1",
-          "Url": "http://auth_service:8080/swagger/v1/swagger.json"
+          "Url": "http://auth:8080/swagger/v1/swagger.json"
         }
       ]
     },

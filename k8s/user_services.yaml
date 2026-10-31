@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-services
+  namespace: app
+  labels:
+    app: apartmentrentals
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: user-services
+  template:
+    metadata:
+      labels:
+        app: user-services
+    spec:
+      containers:
+      - name: user-services
+        image: user_services:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ASPNETCORE_URLS
+          value: "http://+:8080"
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"
+        - name: ConnectionStrings__MongoDB
+          value: "mongodb://mongodb:27017/ApartmentRentalsUsers"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-services
+  namespace: app
+  labels:
+    app: apartmentrentals
+spec:
+  selector:
+    app: user-services
+  ports:
+  - port: 8080
+    targetPort: 8080
