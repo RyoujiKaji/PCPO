@@ -66,7 +66,7 @@ namespace ApartmentRentals.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(SpaceCreateDTO s)
+        public async Task<IActionResult> CreateAsync(SpaceCreateDto s)
         {
             var space = _mapper.Map<Space>(s);
 

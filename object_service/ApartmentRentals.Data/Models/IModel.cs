@@ -3,10 +3,10 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace ApartmentRentals.Data.Models
 {
-    public abstract class Model
+    public abstract class  Model
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        required public string Id { get; set; }
+        public string Id { get; set; } = string.Empty;
     }
 }

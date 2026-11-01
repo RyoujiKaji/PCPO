@@ -1,6 +1,6 @@
 namespace ApartmentRentals.Data.DTOs
 {
-    public class ReceivedObjectDTO{
+    public class ReceivedObjectDto{
         public ApartmentObjectType Type { get; set; }
         public string ObjectId { get; set; } = "";
         public string AuthorId { get; set; } = "";

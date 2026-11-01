@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace ApartmentRentals.Data.DTOs
 {
-    public class SpaceCreateDTO
+    public class SpaceCreateDto
     {
         public SpaceType Category { get; set; }
         public string Title { get; set; } = string.Empty;

@@ -21,7 +21,7 @@ namespace ApartmentRentals.WebAPI.Services.GraphQL
         }
 
         // =========== Space ================
-        public async Task<string> CreateSpaceAsync(SpaceCreateDTO dto)
+        public async Task<string> CreateSpaceAsync(SpaceCreateDto dto)
         {
             Space obj = new Space
             {
@@ -35,7 +35,7 @@ namespace ApartmentRentals.WebAPI.Services.GraphQL
             return await _spaces.CreateAsync(obj);
         }
 
-        public async Task<bool> UpdateSpaceAsync(string id, SpaceNoIdDTO dto) =>
+        public async Task<bool> UpdateSpaceAsync(string id, SpaceNoIdDto dto) =>
              await _spaces.UpdateAsync(id, new Space
              {
                  Category = dto.Category,
@@ -51,7 +51,7 @@ namespace ApartmentRentals.WebAPI.Services.GraphQL
         public async Task<bool> DeleteSpaceAsync(string id) => await _spaces.DeleteByIdAsync(id);
 
         // =========== Landlord ================
-        public async Task<string> CreateLandlordAsync(LandlordNoIdDTO dto)
+        public async Task<string> CreateLandlordAsync(LandlordNoIdDto dto)
         {
             Landlord obj = new Landlord
             {
@@ -68,7 +68,7 @@ namespace ApartmentRentals.WebAPI.Services.GraphQL
             return await _landlords.CreateAsync(obj);
         }
 
-        public async Task<bool> UpdateLandlordAsync(string id, LandlordNoIdDTO dto) =>
+        public async Task<bool> UpdateLandlordAsync(string id, LandlordNoIdDto dto) =>
              await _landlords.UpdateAsync(id, new Landlord
              {
                  Surname = dto.Surname,
@@ -84,7 +84,7 @@ namespace ApartmentRentals.WebAPI.Services.GraphQL
         public async Task<bool> DeleteLandlordAsync(string id) => await _landlords.DeleteByIdAsync(id);
 
         // =========== Tenant ================
-        public async Task<string> CreateTenantAsync(TenantNoIdDTO dto)
+        public async Task<string> CreateTenantAsync(TenantNoIdDto dto)
         {
             Tenant obj = new Tenant
             {
@@ -101,7 +101,7 @@ namespace ApartmentRentals.WebAPI.Services.GraphQL
             return await _tenants.CreateAsync(obj);
         }
 
-        public async Task<bool> UpdateTenantAsync(string id, TenantNoIdDTO dto) =>
+        public async Task<bool> UpdateTenantAsync(string id, TenantNoIdDto dto) =>
              await _tenants.UpdateAsync(id, new Tenant
              {
                  Surname = dto.Surname,
@@ -117,7 +117,7 @@ namespace ApartmentRentals.WebAPI.Services.GraphQL
         public async Task<bool> DeleteTenantAsync(string id) => await _tenants.DeleteByIdAsync(id);
 
         // =========== RentalContract ================
-        public async Task<string> CreateRentalContractAsync(RentalContractNoIdDTO dto)
+        public async Task<string> CreateRentalContractAsync(RentalContractNoIdDto dto)
         {
             RentalContract obj = new RentalContract
             {
@@ -132,7 +132,7 @@ namespace ApartmentRentals.WebAPI.Services.GraphQL
             return await _contracts.CreateAsync(obj);
         }
 
-        public async Task<bool> UpdateRentalContractAsync(string id, RentalContractNoIdDTO dto) =>
+        public async Task<bool> UpdateRentalContractAsync(string id, RentalContractNoIdDto dto) =>
              await _contracts.UpdateAsync(id, new RentalContract
              {
                  TenantId = dto.TenantId,

@@ -1,4 +1,4 @@
-﻿using ApartmentRentals. Data.DTOs;
+﻿using ApartmentRentals.Data.DTOs;
 using ApartmentRentals.Data.Models;
 using AutoMapper;
 
@@ -8,13 +8,13 @@ namespace ApartmentRentals.Models
     {
         public MappingProfile()
         {
-            CreateMap<SpaceCreateDTO, Space>();
-            CreateMap<SpaceNoIdDTO, Space>();
-            CreateMap<Space, SpaceListDTO>();
-            CreateMap<LandlordNoIdDTO, Landlord>();
-            CreateMap<RentalContractNoIdDTO, RentalContract>();
-            CreateMap<TenantNoIdDTO, Tenant>();
-            CreateMap<UserNoIdDTO, User>();
+            CreateMap<SpaceCreateDto, Space>();
+            CreateMap<SpaceNoIdDto, Space>();
+            CreateMap<Space, SpaceListDto>();
+            CreateMap<LandlordNoIdDto, Landlord>();
+            CreateMap<RentalContractNoIdDto, RentalContract>();
+            CreateMap<TenantNoIdDto, Tenant>();
+            CreateMap<UserNoIdDto, User>();
         }
     }
 }
